@@ -1,0 +1,25 @@
+- priority: 0
+  regexp: '^http://.*'
+  message: 'starting 0anacron'
+  happened: 0
+  limit: 5
+  help: 'no informations about this problem111'
+- priority: 1
+  regexp: "^\bfatal: SASL per-process initialization failed"
+  message: 'finished 0anacron'
+  happened: 0
+  limit: 2
+  help: 'no informations about this problem2222'
+- priority: 1
+  regexp: '^\bFailed password for root from \d[0-9]*\.[0-9]*\.[0-9]*\.[0-9]* \bport [0-9]* \bssh[0-9]$'
+  message: ''
+  happened: 0
+  limit: 3
+  help: 'no informations about this problem2222'
+- priority: 1
+  regexp: '^\bDisconnected from \d[0-9]*.\d[0-9]*.\d[0-9]*.\d[0-9]* \bport [0-9]*\b .preauth.'
+  message: ''
+  happened: 0
+  limit: 2
+  help: 'no informations about this problem2222'
+  
