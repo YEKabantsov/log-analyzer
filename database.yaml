@@ -1,25 +1,42 @@
-- priority: 0
+- priority: 'red'
   regexp: '^http://.*'
   message: 'starting 0anacron'
   happened: 0
   limit: 5
   help: 'no informations about this problem111'
-- priority: 1
-  regexp: "^\bfatal: SASL per-process initialization failed"
+- priority: 'red'
+  regexp: '^\bfatal: SASL per-process initialization failed'
   message: 'finished 0anacron'
   happened: 0
   limit: 2
   help: 'no informations about this problem2222'
-- priority: 1
+- priority: 'red'
   regexp: '^\bFailed password for root from \d[0-9]*\.[0-9]*\.[0-9]*\.[0-9]* \bport [0-9]* \bssh[0-9]$'
   message: ''
   happened: 0
   limit: 3
   help: 'no informations about this problem2222'
-- priority: 1
+- priority: 'red'
   regexp: '^\bDisconnected from \d[0-9]*.\d[0-9]*.\d[0-9]*.\d[0-9]* \bport [0-9]*\b .preauth.'
   message: ''
   happened: 0
   limit: 2
   help: 'no informations about this problem2222'
-  
+- priority: 'orange'
+  regexp: '^device descriptor read/(.*), error -(.*)$'
+  message: 'Ваше usb-устройство плохо читается. Рекомендуем Вам скопировать с него все данные чтобы избежать ихи утраты.'
+  happened: 0
+  limit: 1
+  help: 'https://ubuntuforums.org/showthread.php?t=2353776'  
+- priority: 'yellow'
+  regexp: '^PID (.*) \(gutenprint(.*)\+usb\) stopped with status 1!$'
+  message: 'Перестал печатать сетевой принтер.'
+  happened: 0
+  limit: 1
+  help: 'https://support.hp.com/ru-ru/document/c04916149'
+- priority: 'orange'
+  regexp: '^(\d*) Currently unreadable \(pending\) sectors(.*)'
+  message: 'У жёсткого диска появились нечитаемые сектора.'
+  happened: 0
+  limit: 1
+  help: 'https://www.opennet.ru/tips/info/1720.shtml'

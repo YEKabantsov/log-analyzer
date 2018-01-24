@@ -1,0 +1,5 @@
+- level: 'j.log_level(journal.LOG_INFO)'
+  email: 'yuriy@fastzone.ru'
+  name_base: 'database.yaml'
+  
+  #level LOG_INFO, LOG_DEBUG
