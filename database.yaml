@@ -2,25 +2,25 @@
   regexp: '^http://.*'
   message: 'starting 0anacron'
   happened: 0
-  limit: 5
+  limit: 1
   help: 'no informations about this problem111'
 - priority: 'red'
   regexp: '^\bfatal: SASL per-process initialization failed'
   message: 'finished 0anacron'
   happened: 0
-  limit: 2
+  limit: 1
   help: 'no informations about this problem2222'
 - priority: 'red'
   regexp: '^\bFailed password for root from \d[0-9]*\.[0-9]*\.[0-9]*\.[0-9]* \bport [0-9]* \bssh[0-9]$'
-  message: ''
+  message: 'Многократные попытки авторизации под суперпользователем root.'
   happened: 0
-  limit: 3
-  help: 'no informations about this problem2222'
+  limit: 1
+  help: 'https://www.digitalocean.com/community/questions/ssh-login-attempts-from-china-failed-password-for-root-from-china-ip'
 - priority: 'red'
   regexp: '^\bDisconnected from \d[0-9]*.\d[0-9]*.\d[0-9]*.\d[0-9]* \bport [0-9]*\b .preauth.'
   message: ''
   happened: 0
-  limit: 2
+  limit: 1
   help: 'no informations about this problem2222'
 - priority: 'orange'
   regexp: '^device descriptor read/(.*), error -(.*)$'

@@ -7,23 +7,42 @@ import yaml
 import re
 import smtplib
 import socket
+import config
+import telebot
 from email.message import EmailMessage
 from systemd import journal
 from systemd.journal import JournalHandler
 
-conf = yaml.load(open('conf.yaml'))
-print(conf)
-print(conf[0]['email'])
+#conf = yaml.load(open('conf.yaml'))
+bot = telebot.TeleBot(config.token)
 
-def send_email(message, level, from_who):
+@bot.message_handler(content_types=["text"])
+def send_telegram(message, dandt, level, hellp, from_who): # Название функции не играет никакой роли, в принципе
+    mes = "\r\n".join((
+        "Уровень угрозы: %s" % level,
+        "IP компьютера: %s" % from_who,
+        "Дата и время: %s" % dandt,
+        "Проблема: %s" % message,
+        "Способы решения: %s" % hellp
+    ))
+    bot.send_message(129369755, mes)
+    
+def send_email(message, level, from_who, dandt, hellp):
     print('input function emai')
-    me = from_who
-#    you = 'yuriy@fastzone.ru'
-    you = conf[0]['email']
+    me = 'python@mydomain.com'
+    you = 'yuriy@fastzone.ru'
+#    you = conf[0]['email']
     print(you + 'meil from config')
     msg = EmailMessage()
-    msg.set_content(message)
-    msg['Subject'] = 'Level' + level
+    mes = "\r\n".join((
+        "Уровень угрозы: %s" % level,
+        "IP компьютера: %s" % from_who,
+        "Дата и время: %s" % dandt,
+        "Проблема: %s" % message,
+        "Способы решения: %s" % hellp
+    ))
+    msg.set_content(mes)
+    msg['Subject'] = 'Level' + ' ' + level
     msg['From'] = me
     msg['To'] = you
     s = smtplib.SMTP('localhost')
@@ -58,7 +77,8 @@ def output_event_in_real_time(massevent):
                     if (massevent[i]['happened'] + 1) >= (massevent[i]['limit']):
                         print(str(entry['__REALTIME_TIMESTAMP']) + ' ' + result[0])
                         from_who = socket.gethostbyname(socket.gethostname())
-#                        send_email(str(entry['__REALTIME_TIMESTAMP']) + ' ' + result[0], massevent[i]['priority'], from_who)
+                        send_email(result[0], massevent[i]['priority'], from_who, str(entry['__REALTIME_TIMESTAMP']), massevent[i]['help'])
+                        send_telegram(result[0], str(entry['__REALTIME_TIMESTAMP']), massevent[i]['priority'], massevent[i]['help'], from_who)
                         print('Send message administrator from: ' + from_who)
                         massevent[i]['happened'] == 0
                     else:
@@ -67,7 +87,7 @@ def output_event_in_real_time(massevent):
 
 #send_email('send message', 'red', 'yuriy@fastzone.ru')
 
-level = conf[0]['email']
-test_event('fatal: no SASL authentication mechanisms', level)
-#cfg = yaml.load(open('database.yaml'))
-#output_event_in_real_time (cfg)
+#level = conf[0]['email']
+#test_event('fatal: no SASL authentication mechanisms', level)
+cfg = yaml.load(open('database.yaml'))
+output_event_in_real_time (cfg)
